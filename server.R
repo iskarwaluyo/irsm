@@ -58,93 +58,41 @@ function(input, output, session) {
   })
   
 
-# VISUALIZAR CORRELACIONES
-# Combine the selected variables into a new data frame
-    select_categoria <<- reactive({
-      denue_data_subset[, c(input$A)]
-    })
-    
-    select_municipio <<- reactive({
-      denue_data_subset[, c(input$B)]
-    })
-    
-    select_insitu <<- reactive({
-      denue_data_subset[, c(input$C)]
-    })
-    
-    select_municipio <<- reactive({
-      denue_data_subset[, c(input$D)]
-    })
-    
-
-    output$grafica1 <- renderPlot({
-      data <- denue_data_subset
-      plot(summary(as.factor(data$per_ocu)))
+# VISUALIZACIONES 1
+  
+  selectedData1 <<- reactive({
+    cmd_paste <- paste0("denue_data_subset %>% group_by(",input$CAT1,") %>% dplyr::summarise(count = n()) %>% mutate(perc = count/sum(count)*100)")
+    as.data.frame(eval(parse(text = cmd_paste)))
+  })
+  
+  output$grafica1 <- renderPlot({
+    x <- selectedData1()
+    plot_attributes <- paste0("labs(title='Número de establecimientos por ",input$CAT1, "', y='Establecimientos Totales', x='Variable 1', caption = 'Fuente de datos DENUE/INEGI 2021') + coord_flip() + theme(legend.position = 'bottom', axis.text.x = element_text(size = 16, angle = 30), axis.text.y = element_text(size = 16), axis.title = element_text(size = 18, face = 'bold', vjust = -0.00001), title = element_text(size = 20, face = 'bold'),legend.text = element_text(size = 14))")
       
-    })
-    
-    output$grafica2 <- renderPlot({
-      data <- denue_data_subset
-      
-      melt_two_variable <- data %>%
-        group_by(CATEGORIA, municipio, FACTOR_SIT) %>%
-        summarise(count = n()) %>%
-        mutate(perc = count/sum(count)*100)
-      
-      ggplot(melt_two_variable, aes(x = factor(CATEGORIA), y = perc, fill = municipio)) +
-        geom_bar(stat="identity", width = .7, position = position_fill(reverse = TRUE)) +
-        scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
-        # coord_flip() +
-        labs(title="Porcentaje de establecimientos por categoría",
-             subtitle="Establecimientos por categoría por alcaldía",
-             y="Porcentaje de establecimientos (%)",
-             x="Alcaldía",
-             caption = "Fuente de datos DENUE/INEGI 2021") +
-        theme(legend.position = "bottom", 
-              axis.text.x = element_text(size = 16, angle = 30),
-              axis.text.y = element_text(size = 16), 
-              axis.title = element_text(size = 18, face = "bold", vjust = -0.00001),
-              title = element_text(size = 20, face = "bold"),
-              legend.text = element_text(size = 14)) +
-        # geom_text(aes(label = sprintf("%0.2f", round(perc*100, digits = 2))), colour = "black", size = 3,
-        #           position=position_dodge(width=0.025), hjust = "bottom") +
-        labs(fill='') +
-        scale_fill_brewer(palette = "Set3")
-      
-    })
-       
-    output$grafica2 <- renderPlot({
-      data <- denue_data_subset
-      
-      melt_two_variable <- data %>%
-        group_by(select_categoria(), select_municipio(), select_insitu) %>%
-        summarise(count = n()) %>%
-        mutate(perc = count/sum(count)*100)
-
-      ggplot(melt_two_variable, aes(x = factor(select_categoria()), y = perc, fill = select_municipio())) +
-        geom_bar(stat="identity", width = .7, position = position_fill(reverse = TRUE)) +
-        scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
-        # coord_flip() +
-        labs(title="Porcentaje de establecimientos por categoría",
-             subtitle="Establecimientos por categoría por alcaldía",
-             y="Porcentaje de establecimientos (%)",
-             x="Alcaldía",
-             caption = "Fuente de datos DENUE/INEGI 2021") +
-        theme(legend.position = "bottom", 
-              axis.text.x = element_text(size = 16, angle = 30),
-              axis.text.y = element_text(size = 16), 
-              axis.title = element_text(size = 18, face = "bold", vjust = -0.00001),
-              title = element_text(size = 20, face = "bold"),
-              legend.text = element_text(size = 14)) +
-        # geom_text(aes(label = sprintf("%0.2f", round(perc*100, digits = 2))), colour = "black", size = 3,
-        #           position=position_dodge(width=0.025), hjust = "bottom") +
-        labs(fill='') +
-        scale_fill_brewer(palette = "Set3")
-      
-    })
+    cmd_paste <- paste("ggplot(x, aes(x=",input$CAT1,", y=count)) +
+      geom_bar(stat='identity',  width = .7) +",plot_attributes, sep ="", collapse = "")
+    eval(parse(text = cmd_paste))
+  })
+  
+# VISUALIZACIONES 2
+  
+  selectedData2 <<- reactive({
+    cmd_paste <- paste0("denue_data_subset %>% group_by(",input$CAT1,",",input$CAT2,") %>% dplyr::summarise(count = n()) %>% mutate(perc = count/sum(count)*100)")
+    as.data.frame(eval(parse(text = cmd_paste)))
+  })
+  
+  output$tabla4 <- renderTable(
+    selectedData2()
+  ) 
   
   
-  # GENERAR MAPA
+# VISUALIZACIONES 3
+  
+  selectedData3 <<- reactive({
+    denue_data_subset[, c(input$CAT3)]
+  })
+  
+  # GENERAR MAPA 1
   output$mapa <- renderLeaflet({
     
     m <-leaflet(denue_data_hood_aggregate) %>%
@@ -330,16 +278,158 @@ function(input, output, session) {
                               style = list("font-weight" = "normal", padding = "3px 8px"),
                               textsize = "15px",
                               direction = "auto"))    
-
-    
-    #m <- m %>% hideGroup("UECS")
-    
     # CONTROL DE CAPAS
     m <- m %>% addLayersControl(
       baseGroups = c("Open Street Map", "Toner", "Toner Lite"),
-      overlayGroups = c("UECS", "UECS por colonia", "IRSM Total", "IRSM Alimentos", "IRSM Alojamiento", "IRSM Comercio al por mayor",
-                        "IRSM Comercio al por menor", "IRSM Esparcimiento", "IRSM Educación"),
-      options = layersControlOptions(collapsed = TRUE)
+      overlayGroups = c("UECS", "UECS por colonia", "IRSM Total", "IRSM Alimentos", "IRSM Alojamiento", "IRSM Comercio al por mayor", "IRSM Comercio al por menor", "IRSM Esparcimiento", "IRSM Educación", "LISA Todos"), options = layersControlOptions(collapsed = TRUE)
+    )
+    
+  })
+  
+    # GENERAR MAPA 2
+    output$mapa2 <- renderLeaflet({
+      
+      m2 <-leaflet(denue_data_hood_aggregate) %>%
+        addMapPane("A", zIndex = 490) %>% #
+        addMapPane("B", zIndex = 480) %>% # 
+        addMapPane("C", zIndex = 470) %>% # 
+        addMapPane("D", zIndex = 460) %>% # 
+        addMapPane("E", zIndex = 450) %>% #
+        addMapPane("F", zIndex = 440) %>% # 
+        addMapPane("G", zIndex = 430) %>% # 
+        addMapPane("H", zIndex = 420) %>% # 
+        addMapPane("I", zIndex = 410) %>% # 
+        addMapPane("J", zIndex = 410) %>% # 
+        
+        addTiles(group = "Open Street Map") %>%
+        addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
+        addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite")
+    # CAPAS AUTOCORRELACION
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                            options = pathOptions(pane = "A"),
+                            fillOpacity = .7,
+                            fillColor = ~pal_lisa(Todos_LISA),
+                            opacity = .3,
+                            weight = 1,
+                            color = "#4D4D4D",
+                            dashArray = "2",
+                            highlight = highlightOptions(
+                              weight = 1,
+                              color = "#4D4D4D",
+                              fillOpacity = 0.1,
+                              dashArray = "2",
+                              bringToFront = TRUE),
+                            group = "LISA Todos",
+                            labelOptions = labelOptions(
+                              style = list("font-weight" = "normal", padding = "3px 8px"),
+                              textsize = "15px",
+                              direction = "auto"))
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                              options = pathOptions(pane = "B"),
+                              fillOpacity = .7,
+                              fillColor = ~pal_lisa(Alimentos_LISA),
+                              opacity = .3,
+                              weight = 1,
+                              color = "#4D4D4D",
+                              dashArray = "2",
+                              highlight = highlightOptions(
+                                weight = 1,
+                                color = "#4D4D4D",
+                                fillOpacity = 0.1,
+                                dashArray = "2",
+                                bringToFront = TRUE),
+                              group = "LISA Alimentos",
+                              labelOptions = labelOptions(
+                                style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px",
+                                direction = "auto"))
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                              options = pathOptions(pane = "C"),
+                              fillOpacity = .7,
+                              fillColor = ~pal_lisa(Comercio.al.por.menor_LISA),
+                              opacity = .3,
+                              weight = 1,
+                              color = "#4D4D4D",
+                              dashArray = "2",
+                              highlight = highlightOptions(
+                                weight = 1,
+                                color = "#4D4D4D",
+                                fillOpacity = 0.1,
+                                dashArray = "2",
+                                bringToFront = TRUE),
+                              group = "LISA Comercio al por menor",
+                              labelOptions = labelOptions(
+                                style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px",
+                                direction = "auto"))
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                              options = pathOptions(pane = "C"),
+                              fillOpacity = .7,
+                              fillColor = ~pal_lisa(Comercio.al.por.mayor_LISA),
+                              opacity = .3,
+                              weight = 1,
+                              color = "#4D4D4D",
+                              dashArray = "2",
+                              highlight = highlightOptions(
+                                weight = 1,
+                                color = "#4D4D4D",
+                                fillOpacity = 0.1,
+                                dashArray = "2",
+                                bringToFront = TRUE),
+                              group = "LISA Comercio al por mayor",
+                              labelOptions = labelOptions(
+                                style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px",
+                                direction = "auto"))
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                              options = pathOptions(pane = "C"),
+                              fillOpacity = .7,
+                              fillColor = ~pal_lisa(Alojamiento_LISA),
+                              opacity = .3,
+                              weight = 1,
+                              color = "#4D4D4D",
+                              dashArray = "2",
+                              highlight = highlightOptions(
+                                weight = 1,
+                                color = "#4D4D4D",
+                                fillOpacity = 0.1,
+                                dashArray = "2",
+                                bringToFront = TRUE),
+                              group = "LISA Alojamiento",
+                              labelOptions = labelOptions(
+                                style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px",
+                                direction = "auto"))
+    
+    m2 <- m2 %>%  addPolygons(data = denue_data_hood_aggregate, stroke = TRUE, smoothFactor = 0.3,
+                              options = pathOptions(pane = "C"),
+                              fillOpacity = .7,
+                              fillColor = ~pal_lisa(Esparcimiento_LISA),
+                              opacity = .3,
+                              weight = 1,
+                              color = "#4D4D4D",
+                              dashArray = "2",
+                              highlight = highlightOptions(
+                                weight = 1,
+                                color = "#4D4D4D",
+                                fillOpacity = 0.1,
+                                dashArray = "2",
+                                bringToFront = TRUE),
+                              group = "LISA Esparcimiento",
+                              labelOptions = labelOptions(
+                                style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px",
+                                direction = "auto"))
+
+    # CONTROL DE CAPAS
+    m2 <- m2 %>% addLayersControl(
+      baseGroups = c("Open Street Map", "Toner", "Toner Lite"),
+      overlayGroups = c("LISA Todos", "LISA Alimentos", "LISA Comercio al por menor", "LISA Comercio al por mayor", "LISA Alojamiento", "LISA Esparcimiento"), options = layersControlOptions(collapsed = TRUE)
     )
 
   })
