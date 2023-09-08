@@ -35,20 +35,16 @@ Before running remember to:
 | rgeoda         | R Library for Spatial Data Analysis                              | 0.0.9             |
 | rgdal          | Bindings for 'Geospatial' Data Abstraction Library               | 1.5-32            |
 
-## Data sources
+## Fuentes de datos utilizadas
 
--   BUSINESS DIRECTORY (DENUE): <https://www.inegi.org.mx/temas/directorio/>
--   BOROUGHS (ALCALDIAS): <https://datos.cdmx.gob.mx/dataset/alcaldias/resource/8648431b-4f34-4f1a-a4b1-19142f944300>
--   NEIGHBORHOODS W/ POPULATION DENSITY (COLONIAS): <https://datos.cdmx.gob.mx/dataset/densidad-de-poblacion-2010>
+-   DENUE: <https://www.inegi.org.mx/temas/directorio/>
+-   Alcaldías de la CDMX: <https://datos.cdmx.gob.mx/dataset/alcaldias/resource/8648431b-4f34-4f1a-a4b1-19142f944300>
+-   Colonias de la CDMX: <https://datos.cdmx.gob.mx/dataset/densidad-de-poblacion-2010>
 
-## Author
+## Autor
 
 Iskar J. Waluyo Moreno [waluyo\@usc.edu](mailto:waluyo@usc.edu){.email}
 
-## License
+## Derechos
 
 This project is licensed under the [CC0 1.0 Universal](LICENSE.md) Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-Project for USC Spatial Sciences Institute
