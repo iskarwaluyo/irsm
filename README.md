@@ -41,7 +41,8 @@ La gestión integral de los residuos sólidos tiene por objeto disminuir sus imp
 
 ## Autor
 
-Iskar J. Waluyo Moreno [waluyo\@usc.edu](mailto:waluyo@usc.edu){.email}
+Iskar J. Waluyo Moreno [waluyo\@usc.edu](mailto:waluyo@usc.edu)
+Sitio web: <https://www.iskarwaluyo.wordpress.com>
 
 ## Derechos
 
