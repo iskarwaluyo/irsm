@@ -14,9 +14,7 @@ La gestión integral de los residuos sólidos tiene por objeto disminuir sus imp
 
 ## APP
 
-## Deployment
-
-Before running remember to:
+## Deployment del código
 
 - Decompress "foodwastemexicocity_DATA.zip"
 - Decompress all ZIP files in the "RData" directory
