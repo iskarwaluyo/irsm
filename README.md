@@ -1,10 +1,9 @@
-# Identificacion de hotspots residuos CDMX
+# Evaluación del riesgo por acumulación de residuos sólidos municipales basado en la actividad comercial y de servicios en la Ciudad de México
 
-## Abstract
+## Resumen
+La gestión integral de los residuos sólidos tiene por objeto disminuir sus impactos ambientales por lo que la consistencia y actualización en datos oficiales, así como la localización de las fuentes generadoras, cobra importancia para su manejo. Metodología: Este trabajo propone un Indice para evaluar el riesgo por acumulación de Residuos Sólidos Municipales (IRSM) en las Unidades Económicas Comerciales y de Servicios (UECS) de la Ciudad de México que permitiría evaluar la distribución territorial del riesgo de acumulación de RSM debido a la concentración de actividad económica en cada alcaldía y colonia. Resultados: Se encontró el mayor riesgo promedio por establecimiento en las alcaldías M. Hidalgo, B. Juárez, Cuajimalpa, Cuauhtémoc y A. Obregón. Sin embargo, el mayor IRSM acumulado no coincidió con estas. Conclusiones: El riesgo de acumulación de RSM varía de acuerdo con el tipo de actividad económica y tamaño de establecimiento. Dicho riesgo se evalúa con un índice que integra datos de diversas fuentes en información fácil de interpretar resultando en una herramienta que complementa la información existente sobre RSM para una mejor planeación de su manejo. 
 
-While formal definitions of food systems may vary, in general they include the way we produce, distribute and consume food. Food consumption is evidently related to the production of large quantities of certain types of waste that can and should be handled differently than other types of urban wastes, namely urban organic waste. Possible waste management techniques include local composting sites, home composting and proper waste separation. In large metropolitan areas such as Mexico City, proper food waste management is a daunting challenge for local governments and vital for improvement of overall quality of life and to reduce potential sites for health concerns. Poor food waste management could result in foci of infection and pests. In this regard, this work argues that as we push toward more environmentally friendly cities, the identification of food waste clusters in Mexico City could provide valuable information for better planning of waste management in the future. Furthermore, the paper discusses possible strategies for food waste management based on the results. This work uses data from the National Institute of Statistics and Geography (INEGI) in Mexico regarding business activities and categorizes them in terms of the likelihood of onsite food consumption, and thus possible food waste production clusters. While restaurants are the first food outlets that come to mind in terms of onsite food waste production; grocery stores, convenience stores, hotels, recreational sites are also different types of businesses considered. Identification of clusters is achieved through a 4 stage process: 1) qualitative reclassification of businesses types according to the probability of onsite food consumption, 2) assigning weights to each of the reclassification categories, 3) evaluating spatial clustering with local spatial autocorrelation of the businesses by neighborhood and 4) mapping results.
-
-## Files and directories
+## Archivos para el análisis de datos
 
 - data_prep.R - Takes raw data and GIS data and creates RData files to run program (not necessary to run, just read RData files)
 - data_analysis.R - Analyzes data and creates plots
@@ -12,6 +11,8 @@ While formal definitions of food systems may vary, in general they include the w
 - scratch.R - scratch file to try code
 - foodwastemexicocity_DATA.zip - contains raw data, gis data, resulting shape files and RData files
 - README.md - this text
+
+## APP
 
 ## Deployment
 
