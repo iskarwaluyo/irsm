@@ -3,22 +3,24 @@
 ## Resumen
 La gestión integral de los residuos sólidos tiene por objeto disminuir sus impactos ambientales por lo que la consistencia y actualización en datos oficiales, así como la localización de las fuentes generadoras, cobra importancia para su manejo. Metodología: Este trabajo propone un Indice para evaluar el riesgo por acumulación de Residuos Sólidos Municipales (IRSM) en las Unidades Económicas Comerciales y de Servicios (UECS) de la Ciudad de México que permitiría evaluar la distribución territorial del riesgo de acumulación de RSM debido a la concentración de actividad económica en cada alcaldía y colonia. Resultados: Se encontró el mayor riesgo promedio por establecimiento en las alcaldías M. Hidalgo, B. Juárez, Cuajimalpa, Cuauhtémoc y A. Obregón. Sin embargo, el mayor IRSM acumulado no coincidió con estas. Conclusiones: El riesgo de acumulación de RSM varía de acuerdo con el tipo de actividad económica y tamaño de establecimiento. Dicho riesgo se evalúa con un índice que integra datos de diversas fuentes en información fácil de interpretar resultando en una herramienta que complementa la información existente sobre RSM para una mejor planeación de su manejo. 
 
-## Archivos para el análisis de datos
-
-- data_prep.R - Takes raw data and GIS data and creates RData files to run program (not necessary to run, just read RData files)
-- data_analysis.R - Analyzes data and creates plots
-- esda.R - Creates more plots and runs autocorrelation processes with rgeoda package. Also creates shape files of results.
-- scratch.R - scratch file to try code
-- foodwastemexicocity_DATA.zip - contains raw data, gis data, resulting shape files and RData files
-- README.md - this text
-
 ## APP
 
-## Deployment del código
+## Deployment de la APP
 
 - Decompress "foodwastemexicocity_DATA.zip"
 - Decompress all ZIP files in the "RData" directory
 - Rename directory where needed
+
+## Archivos para el análisis de datos
+Dentro del directorio 'R' se encuentra el código ustilizado para el análisis de los datos para los mapas de la APP. 
+
+1. af
+2. adf
+3. adf
+4. adf
+5. adf
+6. SD
+7. D
 
 ## Built With
 
