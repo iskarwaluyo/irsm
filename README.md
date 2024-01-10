@@ -1,8 +1,5 @@
 # Evaluación del riesgo por acumulación de residuos sólidos municipales basado en la actividad comercial y de servicios en la Ciudad de México
 
-## Resumen
-La gestión integral de los residuos sólidos tiene por objeto disminuir sus impactos ambientales por lo que la consistencia y actualización en datos oficiales, así como la localización de las fuentes generadoras, cobra importancia para su manejo. Metodología: Este trabajo propone un Indice para evaluar el riesgo por acumulación de Residuos Sólidos Municipales (IRSM) en las Unidades Económicas Comerciales y de Servicios (UECS) de la Ciudad de México que permitiría evaluar la distribución territorial del riesgo de acumulación de RSM debido a la concentración de actividad económica en cada alcaldía y colonia. Resultados: Se encontró el mayor riesgo promedio por establecimiento en las alcaldías M. Hidalgo, B. Juárez, Cuajimalpa, Cuauhtémoc y A. Obregón. Sin embargo, el mayor IRSM acumulado no coincidió con estas. Conclusiones: El riesgo de acumulación de RSM varía de acuerdo con el tipo de actividad económica y tamaño de establecimiento. Dicho riesgo se evalúa con un índice que integra datos de diversas fuentes en información fácil de interpretar resultando en una herramienta que complementa la información existente sobre RSM para una mejor planeación de su manejo. 
-
 ## Archivos para el análisis de datos
 Dentro del directorio 'R' se encuentra el código ustilizado para el análisis de los datos para los mapas de la APP. 
 
