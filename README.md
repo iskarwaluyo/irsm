@@ -1,4 +1,4 @@
-# Evaluación del riesgo por acumulación de residuos sólidos municipales basado en la actividad comercial y de servicios en la Ciudad de México
+# IRSM CDMX
 
 ## Archivos para el análisis de datos
 Dentro del directorio 'R' se encuentra el código ustilizado para el análisis de los datos para los mapas de la APP. 
